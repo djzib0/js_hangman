@@ -107,6 +107,52 @@ button {
     opacity: 80%;
 }
 
+.btn-off,
+.btn-on {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+}
+
+.btn-off {
+    background-color: red;
+    color: white;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.btn-on {
+    background-color: green;
+    color: white;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.off-btn-inactive,
+.on-btn-inactive {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    background-color: rgb(61, 61, 61);
+    color: rgb(108, 108, 108);
+}
+
+.off-btn-inactive {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.on-btn-inactive {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
 .message-text {
     color: white;
     padding: 0;

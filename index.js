@@ -25,6 +25,9 @@ const messageContainer = document.querySelector(".message-container")
 const closeBtn = document.querySelector(".close-btn")
 const messageText = document.querySelector(".message-text")
 
+const offBtn = document.getElementById("btn-off")
+const onBtn = document.getElementById("btn-on")
+
 
 startGameBtn.addEventListener("click", function() {
     startGame()
@@ -33,6 +36,18 @@ startGameBtn.addEventListener("click", function() {
 closeBtn.addEventListener("click", function() {
     messageContainer.style.display = 'none'
     console.log('clicked', messageContainer)
+})
+
+offBtn.addEventListener("click", function() {
+    onBtn.className = "on-btn-inactive"
+    offBtn.className = "btn-off"
+    showCategory = false
+})
+
+onBtn.addEventListener("click", function() {
+    offBtn.className = "off-btn-inactive"
+    onBtn.className = 'btn-on'
+    showCategory = true
 })
 
 function startGame() {
