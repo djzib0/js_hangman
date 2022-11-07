@@ -9,7 +9,7 @@ let words = [
     },
 ]
 
-let tries = 10
+let tries = 7
 let chosenIndex = 0
 let choices = []
 let wrongChoices = []
@@ -17,6 +17,8 @@ let chosenWord = ''
 let newWordLettersList = []
 let usedLetters = []
 let showCategory = false
+let gameIsStarted = false
+
 const deathToolImg = document.getElementById("death-tool")
 const startGameContainer = document.querySelector(".start-game-container")
 const gameContainer = document.querySelector(".game-container")
@@ -24,11 +26,16 @@ const startGameBtn = document.querySelector(".start-game-btn")
 const messageContainer = document.querySelector(".message-container")
 const closeBtn = document.querySelector(".close-btn")
 const messageText = document.querySelector(".message-text")
+const settingsContainer = document.querySelector(".settings-container")
 
+const settingsBtn = document.getElementById("settings-icon")
+const closeSettingsBtn = document.getElementById("close-settings-btn")
 const offBtn = document.getElementById("btn-off")
 const onBtn = document.getElementById("btn-on")
 
 
+
+gameContainer.style.height = 0
 startGameBtn.addEventListener("click", function() {
     startGame()
 })
@@ -50,13 +57,35 @@ onBtn.addEventListener("click", function() {
     showCategory = true
 })
 
+settingsBtn.addEventListener("click", function() {
+    if (showCategory) {
+        offBtn.className = "off-btn-inactive"
+        onBtn.className = 'btn-on'
+    } else {
+        onBtn.className = "on-btn-inactive"
+        offBtn.className = "btn-off"
+    }
+    settingsContainer.style.display = 'flex'
+})
+
+closeSettingsBtn.addEventListener("click", function() {
+    settingsContainer.style.display = 'none'
+    if (gameIsStarted) {
+        renderGame()
+    }
+})
+
+// functions
+
 function startGame() {
     choices = []
     wrongChoices = []
     usedLetters = []
     tries = 7
+    gameIsStarted = true
     startGameContainer.style.display = 'none'
     gameContainer.style.display = 'flex'
+    gameContainer.style.height = startGameContainer.style.height
     chosenWord = chooseWord(words)
     renderGame()
 }
