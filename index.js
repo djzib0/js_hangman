@@ -17,7 +17,7 @@ let chosenWord = ''
 let newWordLettersList = []
 let usedLetters = []
 let showCategory = false
-let gameIsStarted = false
+let gameIsStarted = false // if game is started changes in settings will render a game, otherwise nothing happens
 
 const deathToolImg = document.getElementById("death-tool")
 const startGameContainer = document.querySelector(".start-game-container")
@@ -35,7 +35,7 @@ const onBtn = document.getElementById("btn-on")
 
 
 
-gameContainer.style.height = 0
+// gameContainer.style.height = 0
 startGameBtn.addEventListener("click", function() {
     startGame()
 })
@@ -85,7 +85,7 @@ function startGame() {
     gameIsStarted = true
     startGameContainer.style.display = 'none'
     gameContainer.style.display = 'flex'
-    gameContainer.style.height = startGameContainer.style.height
+    gameContainer.style.height = '400px'
     chosenWord = chooseWord(words)
     renderGame()
 }
@@ -94,6 +94,10 @@ function renderGame() {
     if (tries > 0) {
         displayGraphic()
         displayList(chosenWord)
+        let testContainer = document.querySelector(".word-container")
+        if (!testContainer.innerText.includes("_")) {
+            console.log("brawo, udało ci się odgadnąć hasło")
+        }
     } else {
         displayGraphic()
         console.log("koniec gry, renderuję start game")
@@ -120,7 +124,6 @@ function displayList(chosenWord) {
     for (let i = 0; i < chosenWord.length; i++) {
         let letter = chosenWord[i]
         if (choices.includes(letter)) {
-            console.log(choices)
             wordContainer.innerHTML += `<p class="word-par">${letter.toUpperCase()}</p>`
         } else {
             wordContainer.innerHTML += `<p class="word-par">_<p>`
@@ -147,12 +150,12 @@ function addForm() {
         </form>
     </div>
     <div class="show-chosen-letters">
-        <p>Used letters: ${usedLetters}</p>
+        <p class="medium-par">Used letters: ${usedLetters}</p>
     </div>`
 
     if (showCategory) {
         gameContainer.innerHTML +=
-        `<p>Category - ${words[chosenIndex].category.toUpperCase()}</p>`
+        `<p class="medium-par">Category - ${words[chosenIndex].category.toUpperCase()}</p>`
     }
 
     const inputForm = document.getElementById("input-form")
@@ -170,14 +173,18 @@ function addForm() {
             choices.push(letter)
             usedLetters.push(letter)
             renderGame()
-        } else if (!isInChosenWord(letter)) {
+        } else if (!isInChosenWord(letter) && !usedLetters.includes(letter)) {
             tries -= 1
             letter = letter.toUpperCase()
             wrongChoices.push(letter)
-            usedLetters.push(letter)
-            console.log("liczba prób", tries)
+            if (!usedLetters.includes(letter)) {
+                usedLetters.push(letter)
+            }
             renderGame()
-        } 
+        } else {
+            renderMessage(letter)
+            renderGame()
+        }
     } else {
         renderMessageNotALetter(letter)
     }
