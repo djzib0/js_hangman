@@ -149,6 +149,7 @@ function chooseWord(arr) {
 }
 
 function addForm() {
+    // categoryContainer.innerHTML = ''
     gameContainer.innerHTML += 
     `<div class="form-container">
         <form id="input-form">
@@ -164,12 +165,18 @@ function addForm() {
     </div>
     <div class="show-chosen-letters">
         <p class="medium-par">Used letters: ${usedLetters}</p>
-    </div>`
-
+    </div>
+    <div class="category-container">
+    <p class="medium-par" id="category">&nbsp;</p>
+  </div> 
+    `
+    // showing category if it's set in settings window
     if (showCategory) {
-        gameContainer.innerHTML +=
+        const categoryContainer = document.querySelector(".category-container")
+        categoryContainer.innerHTML =
         `<p class="medium-par">Category - ${words[chosenIndex].category.toUpperCase()}</p>`
     }
+    
 
     const inputForm = document.getElementById("input-form")
     inputForm.addEventListener("submit", function(e){
