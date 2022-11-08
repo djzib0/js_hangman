@@ -18,6 +18,7 @@ let newWordLettersList = []
 let usedLetters = []
 let showCategory = false
 let gameIsStarted = false // if game is started changes in settings will render a game, otherwise nothing happens
+let messageWindowIsActive = false  // whenever message window is open, you can't use input field
 
 const deathToolImg = document.getElementById("death-tool")
 const startGameContainer = document.querySelector(".start-game-container")
@@ -42,7 +43,8 @@ startGameBtn.addEventListener("click", function() {
 
 closeBtn.addEventListener("click", function() {
     messageContainer.style.display = 'none'
-    console.log('clicked', messageContainer)
+    messageWindowIsActive = false
+    renderGame()
 })
 
 offBtn.addEventListener("click", function() {
@@ -94,6 +96,7 @@ function renderGame() {
     if (tries > 0) {
         displayGraphic()
         displayList(chosenWord)
+
         let testContainer = document.querySelector(".word-container")
         if (!testContainer.innerText.includes("_")) {
             console.log("brawo, udało ci się odgadnąć hasło")
@@ -104,7 +107,6 @@ function renderGame() {
         startGameContainer.style.display = 'flex'
         gameContainer.style.display = 'none'
     }
-
 }
 
 function makeNewWordLetterList(word) {
@@ -130,6 +132,15 @@ function displayList(chosenWord) {
         }
     } 
     addForm()
+    if (messageWindowIsActive) { // when message window is displayed, input field and submit button is 
+        const inputEl = document.getElementById("letter-input")
+        const submitBtnEl = document.getElementById("submit-btn")
+        inputEl.removeAttribute('enabled')
+        inputEl.setAttribute('disabled', '')
+        submitBtnEl.removeAttribute('enabled')
+        submitBtnEl.setAttribute('disabled', '')
+        inputEl.enabled = false
+    }
 }
 
 function chooseWord(arr) {
@@ -145,8 +156,10 @@ function addForm() {
                 type="text" 
                 name="input-letter" 
                 placeholder="Enter letter"
+                id="letter-input"
+                enabled
                 >
-            <button type="submit" class="confirm-btn">CONFIRM</button>
+            <button type="submit" class="confirm-btn" id="submit-btn" enabled>CONFIRM</button>
         </form>
     </div>
     <div class="show-chosen-letters">
@@ -172,7 +185,7 @@ function addForm() {
             letter = letter.toUpperCase()
             choices.push(letter)
             usedLetters.push(letter)
-            renderGame()
+            // renderGame()
         } else if (!isInChosenWord(letter) && !usedLetters.includes(letter)) {
             tries -= 1
             letter = letter.toUpperCase()
@@ -180,14 +193,15 @@ function addForm() {
             if (!usedLetters.includes(letter)) {
                 usedLetters.push(letter)
             }
-            renderGame()
+            // renderGame()
         } else {
             renderMessage(letter)
-            renderGame()
+            // renderGame()
         }
     } else {
         renderMessageNotALetter(letter)
     }
+    renderGame()
     })
 }
 
@@ -208,34 +222,36 @@ function displayGraphic() {
 }
 
 function renderMessage(letter) {
+    messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `Letter "${letter.toUpperCase()}" was already chosen. Please try another letter.`
-    renderGame()
 }
 
 function renderMessageNotALetter(letter) {
+    messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `"${letter.toUpperCase()}" is not a letter.`
 }
 
 function renderMessageToLongString(letter) {
+    messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `You can only pick one letter, not a string.`
 }
 
-function showChosenLetters() {
-    gameContainer.innerHTML += `<p id="chosen-letters></p>`
-    console.log(gameContainer)
-    // const chosenLettersEl = document.getElementById("chosen-letters")
-    // console.log(chosenLettersEl)
-    // chosenLettersEl.innerText = "Already chosen letters are: "
-    // if (choices.length > 0) {
-    //     for (let i = 0; i < choices.length; i++) {
-    //         if (choices.length > 0) {
-    //             gameContainer.innerText += choices[i].toUpperCase() + " "
-    //         }
-    //         console.log("Already chosen letters are:", choices[i].toUpperCase())
-    //     }
-    // }
+// function showChosenLetters() {
+//     gameContainer.innerHTML += `<p id="chosen-letters></p>`
+//     console.log(gameContainer)
+//     // const chosenLettersEl = document.getElementById("chosen-letters")
+//     // console.log(chosenLettersEl)
+//     // chosenLettersEl.innerText = "Already chosen letters are: "
+//     // if (choices.length > 0) {
+//     //     for (let i = 0; i < choices.length; i++) {
+//     //         if (choices.length > 0) {
+//     //             gameContainer.innerText += choices[i].toUpperCase() + " "
+//     //         }
+//     //         console.log("Already chosen letters are:", choices[i].toUpperCase())
+//     //     }
+//     // }
  
-}
+// }
