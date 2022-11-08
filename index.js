@@ -149,7 +149,7 @@ function chooseWord(arr) {
 }
 
 function addForm() {
-    // categoryContainer.innerHTML = ''
+    let colorUsedLetters = colorLetters(usedLetters)
     gameContainer.innerHTML += 
     `<div class="form-container">
         <form id="input-form">
@@ -164,7 +164,7 @@ function addForm() {
         </form>
     </div>
     <div class="show-chosen-letters">
-        <p class="medium-par">Used letters: ${usedLetters}</p>
+        <p class="medium-par">Used letters: ${colorUsedLetters}</p>
     </div>
     <div class="category-container">
     <p class="medium-par" id="category">&nbsp;</p>
@@ -225,7 +225,22 @@ function isInChosenWord(letter) {
 
 function displayGraphic() {
     deathToolImg.src = `images/gallows${tries}.png`
-
+}
+// displaying colored letters - green when letter is correct, red when it's not correct
+function colorLetters(letters) {
+    const coloredLetters = []
+    let newItem = ''
+    for (let i = 0; i < letters.length; i++) {
+        if (!wrongChoices.includes(letters[i])) {
+            newItem = ("<span class='green'>" + letters[i] + "</span>")
+            coloredLetters.push(newItem)
+        } else {
+            newItem = ("<span class='red'>" + letters[i] + "</span>")
+            coloredLetters.push(newItem)
+        } 
+    }
+    console.log(coloredLetters)
+    return coloredLetters
 }
 
 function renderMessage(letter) {

@@ -15,9 +15,16 @@ body {
     background-color: whitesmoke;
 }
 
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
 
 /* layout */
-
 .container {
     margin: 0 auto;
     display: flex;
