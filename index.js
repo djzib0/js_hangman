@@ -4,9 +4,10 @@ let words = [
         category: "vegetables"
     },
     {
-        word: "portugalia",
+        word: "stany zjednoczone",
         category: "countries"
     },
+
 ]
 
 let tries = 7
@@ -16,6 +17,7 @@ let wrongChoices = []
 let chosenWord = ''
 let newWordLettersList = []
 let usedLetters = []
+let wordIsGuessed = false
 let showCategory = false
 let gameIsStarted = false // if game is started changes in settings will render a game, otherwise nothing happens
 let messageWindowIsActive = false  // whenever message window is open, you can't use input field
@@ -28,6 +30,7 @@ const messageContainer = document.querySelector(".message-container")
 const closeBtn = document.querySelector(".close-btn")
 const messageText = document.querySelector(".message-text")
 const settingsContainer = document.querySelector(".settings-container")
+const endGameContainer = document.querySelector(".end-game-container")
 
 const settingsBtn = document.getElementById("settings-icon")
 const closeSettingsBtn = document.getElementById("close-settings-btn")
@@ -77,14 +80,22 @@ closeSettingsBtn.addEventListener("click", function() {
     }
 })
 
+// closeEndGameBtn.addEventListener("click", function() {
+//     console.log(closeEndGameBtn.innerHTML)
+//     endGameContainer.style.display = 'none'
+//     console.log("testujemy")
+//     location.reload()
+// })
+
 // functions
 
 function startGame() {
-    choices = []
+    choices = [' ']
     wrongChoices = []
     usedLetters = []
     tries = 7
     gameIsStarted = true
+    wordIsGuessed = false
     startGameContainer.style.display = 'none'
     gameContainer.style.display = 'flex'
     gameContainer.style.height = '400px'
@@ -93,15 +104,12 @@ function startGame() {
 }
 
 function renderGame() {
-    if (tries > 0) {
+    displayList(chosenWord)
+    isWordGuessed()
+    if (tries > 0 && !wordIsGuessed) {
         displayGraphic()
-        displayList(chosenWord)
 
-        let testContainer = document.querySelector(".word-container")
-        if (!testContainer.innerText.includes("_")) {
-            console.log("brawo, udało ci się odgadnąć hasło")
-        }
-    } else {
+    } else if (tries === 0 && !wordIsGuessed) {
         displayGraphic()
         console.log("koniec gry, renderuję start game")
         startGameContainer.style.display = 'flex'
@@ -118,17 +126,20 @@ function makeNewWordLetterList(word) {
 }
 
 function displayList(chosenWord) {
-    gameContainer.innerHTML = `
-    <div class="word-container">
+    gameContainer.innerHTML = 
+    `
+    <div class=" container word-container">
+        <p class="word-par" id="word"></p>
     </div>`
-    const wordContainer = document.querySelector(".word-container")
+    const wordContainer = document.querySelector("#word")
     wordContainer.innerHTML = ''
     for (let i = 0; i < chosenWord.length; i++) {
         let letter = chosenWord[i]
+        console.log("litera:", chosenWord[i])
         if (choices.includes(letter)) {
-            wordContainer.innerHTML += `<p class="word-par">${letter.toUpperCase()}</p>`
+            wordContainer.innerHTML += `${letter.toUpperCase()}`
         } else {
-            wordContainer.innerHTML += `<p class="word-par">_<p>`
+            wordContainer.innerHTML += `_`
         }
     } 
     addForm()
@@ -164,7 +175,7 @@ function addForm() {
         </form>
     </div>
     <div class="show-chosen-letters">
-        <p class="medium-par">Used letters: ${colorUsedLetters}</p>
+        <p class="medium-par">Letters used: ${colorUsedLetters}</p>
     </div>
     <div class="category-container">
     <p class="medium-par" id="category">&nbsp;</p>
@@ -261,19 +272,22 @@ function renderMessageToLongString(letter) {
     messageText.innerHTML = `You can only pick one letter, not a string.`
 }
 
-// function showChosenLetters() {
-//     gameContainer.innerHTML += `<p id="chosen-letters></p>`
-//     console.log(gameContainer)
-//     // const chosenLettersEl = document.getElementById("chosen-letters")
-//     // console.log(chosenLettersEl)
-//     // chosenLettersEl.innerText = "Already chosen letters are: "
-//     // if (choices.length > 0) {
-//     //     for (let i = 0; i < choices.length; i++) {
-//     //         if (choices.length > 0) {
-//     //             gameContainer.innerText += choices[i].toUpperCase() + " "
-//     //         }
-//     //         console.log("Already chosen letters are:", choices[i].toUpperCase())
-//     //     }
-//     // }
- 
-// }
+function showEndGame() {
+    endGameContainer.style.display = 'flex'
+    endGameContainer.innerHTML += `<img class="end-game-image src="images/defeat.gif">`
+}
+
+function isWordGuessed() {
+    let wordContainer = document.querySelector(".word-container")
+    console.log(wordContainer)
+    if (!wordContainer.innerText.includes("_")) {
+        console.log("brawo, udało ci się odgadnąć hasło")
+        wordIsGuessed = true
+        showEndGame()
+        const closeEndGameBtn = document.getElementById("close-end-game-btn")
+        closeEndGameBtn.addEventListener("click", function() {
+            endGameContainer.style.display = 'none'
+            location.reload()
+        })
+    }
+}

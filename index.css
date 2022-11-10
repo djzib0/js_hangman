@@ -15,28 +15,20 @@ body {
     background-color: whitesmoke;
 }
 
-.green {
-    color: green;
-}
-
-.red {
-    color: red;
-}
-
 
 /* layout */
 .container {
     margin: 0 auto;
     display: flex;
     width: 610px;
-    height: 100px;
+    /* height: 100px; */
     justify-content: center;
     background-image: url('images/gridpaper.jpg');
     background-size: 70%;
 }
 
 .hangman-img-container {
-    height: 310px;
+    height: 250px;
 }
 
 .start-game-container,
@@ -45,7 +37,6 @@ body {
     display: flex;
     /* padding: 20px 0; */
     /* display: none; */
-    background-color: pink;
     height: 400px;
 }
 
@@ -61,6 +52,15 @@ body {
 
 .word-container {
     display: flex;
+    height: auto;
+}
+
+.show-chosen-letters {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
 }
 
 .form-container {
@@ -74,7 +74,6 @@ body {
 }
 
 .message-container {
-    display: none;
     position: fixed;
     background-image: none;
     background-color: black;
@@ -85,6 +84,10 @@ body {
     top: 0;
     bottom: 0;
     margin: auto;
+}
+
+.message-container {
+    display: none;
 }
 
 .message-items-container {
@@ -126,11 +129,29 @@ body {
     margin: 0;
 }
 
+.end-game-container {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+    width: 300px;
+    height: 100px;
+    left: 0;
+    right: 0;
+    top: 120px;
+    bottom: 0;
+    width: 300px;
+    height: 300px;
+    background-image: none;
+    background-color: black;
+    color: white;
+    padding: 5px;
+}
+
 .close-btn-container {
     display: flex;
     position: relative;
 }
-
 
 .close-btn {
     position: absolute;
@@ -172,11 +193,22 @@ body {
     padding: 0;
 }
 
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
 .word-par {
     margin-right: 3px;
-    width: 20px;
+    text-align: center;
+    /* width: 20px; */
     font-size: 50px;
     margin: 0px 10px;
+    display: inline-block;
+    /* letter-spacing: 10px; */
 }
 
 .medium-par {
