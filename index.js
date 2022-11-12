@@ -1,13 +1,16 @@
 let words = [
     {
-        word: "kalafior",
-        category: "vegetables"
+        word: "belly button",
+        category: "body"
     },
     {
-        word: "stany zjednoczone",
+        word: "canada",
         category: "countries"
     },
-
+    {
+        word: "shoulder",
+        category: "body"
+    },
 ]
 
 let tries = 7
@@ -28,6 +31,7 @@ const gameContainer = document.querySelector(".game-container")
 const startGameBtn = document.querySelector(".start-game-btn")
 const messageContainer = document.querySelector(".message-container")
 const closeBtn = document.querySelector(".close-btn")
+const closeMsgBtn = document.querySelector(".close-msg-btn")
 const messageText = document.querySelector(".message-text")
 const settingsContainer = document.querySelector(".settings-container")
 const endGameContainer = document.querySelector(".end-game-container")
@@ -44,7 +48,7 @@ startGameBtn.addEventListener("click", function() {
     startGame()
 })
 
-closeBtn.addEventListener("click", function() {
+closeMsgBtn.addEventListener("click", function() {
     messageContainer.style.display = 'none'
     messageWindowIsActive = false
     renderGame()
@@ -80,15 +84,7 @@ closeSettingsBtn.addEventListener("click", function() {
     }
 })
 
-// closeEndGameBtn.addEventListener("click", function() {
-//     console.log(closeEndGameBtn.innerHTML)
-//     endGameContainer.style.display = 'none'
-//     console.log("testujemy")
-//     location.reload()
-// })
-
 // functions
-
 function startGame() {
     choices = [' ']
     wrongChoices = []
@@ -111,7 +107,6 @@ function renderGame() {
 
     } else if (tries === 0 && !wordIsGuessed) {
         displayGraphic()
-        console.log("koniec gry, renderuję start game")
         startGameContainer.style.display = 'flex'
         gameContainer.style.display = 'none'
     }
@@ -135,7 +130,6 @@ function displayList(chosenWord) {
     wordContainer.innerHTML = ''
     for (let i = 0; i < chosenWord.length; i++) {
         let letter = chosenWord[i]
-        console.log("litera:", chosenWord[i])
         if (choices.includes(letter)) {
             wordContainer.innerHTML += `${letter.toUpperCase()}`
         } else {
@@ -144,14 +138,18 @@ function displayList(chosenWord) {
     } 
     addForm()
     if (messageWindowIsActive) { // when message window is displayed, input field and submit button is 
-        const inputEl = document.getElementById("letter-input")
-        const submitBtnEl = document.getElementById("submit-btn")
-        inputEl.removeAttribute('enabled')
-        inputEl.setAttribute('disabled', '')
-        submitBtnEl.removeAttribute('enabled')
-        submitBtnEl.setAttribute('disabled', '')
-        inputEl.enabled = false
+        blockInput()
     }
+}
+
+function blockInput() {
+    const inputEl = document.getElementById("letter-input")
+    const submitBtnEl = document.getElementById("submit-btn")
+    inputEl.removeAttribute('enabled')
+    inputEl.setAttribute('disabled', '')
+    submitBtnEl.removeAttribute('enabled')
+    submitBtnEl.setAttribute('disabled', '')
+    inputEl.enabled = false
 }
 
 function chooseWord(arr) {
@@ -250,7 +248,6 @@ function colorLetters(letters) {
             coloredLetters.push(newItem)
         } 
     }
-    console.log(coloredLetters)
     return coloredLetters
 }
 
@@ -258,32 +255,51 @@ function renderMessage(letter) {
     messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `Letter "${letter.toUpperCase()}" was already chosen. Please try another letter.`
+    // setTimeout(() => {
+    //     messageContainer.style.display = 'none'
+    //     messageWindowIsActive = false
+    //     renderGame()
+    // }, 3000);
 }
 
 function renderMessageNotALetter(letter) {
     messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `"${letter.toUpperCase()}" is not a letter.`
+    // setTimeout(() => {
+    //     messageContainer.style.display = 'none'
+    //     messageWindowIsActive = false
+    //     renderGame()
+    // }, 3000);
 }
 
 function renderMessageToLongString(letter) {
     messageWindowIsActive = true
     messageContainer.style.display = 'flex'
-    messageText.innerHTML = `You can only pick one letter, not a string.`
+    messageText.innerHTML = `You can only pick one letter`
+    // setTimeout(() => {
+    //     messageContainer.style.display = 'none'
+    //     messageWindowIsActive = false
+    //     renderGame()
+    // }, 3000);
 }
 
 function showEndGame() {
     endGameContainer.style.display = 'flex'
     endGameContainer.innerHTML += `<img class="end-game-image src="images/defeat.gif">`
+    setTimeout(() => {
+        endGameContainer.style.display = 'none'
+        messageWindowIsActive = false
+        location.reload()
+    }, 3000);
 }
 
 function isWordGuessed() {
     let wordContainer = document.querySelector(".word-container")
-    console.log(wordContainer)
     if (!wordContainer.innerText.includes("_")) {
-        console.log("brawo, udało ci się odgadnąć hasło")
         wordIsGuessed = true
         showEndGame()
+        blockInput()
         const closeEndGameBtn = document.getElementById("close-end-game-btn")
         closeEndGameBtn.addEventListener("click", function() {
             endGameContainer.style.display = 'none'

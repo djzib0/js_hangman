@@ -88,14 +88,21 @@ body {
 
 .message-container {
     display: none;
+    border-radius: 5px;
+    border: 2px dashed black;
+    background-color: white;
+    color: black;
+    height: 120px;
+    padding: 5px;
 }
 
 .message-items-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px;
+    justify-content: center;
+    /* padding: 5px; */
+    margin: 0;
 }
 
 .settings-container {
@@ -134,14 +141,13 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     position: fixed;
-    width: 300px;
-    height: 100px;
     left: 0;
     right: 0;
     top: 120px;
     bottom: 0;
+    margin: auto;
     width: 300px;
-    height: 300px;
+    height: 150px;
     background-image: none;
     background-color: black;
     color: white;
@@ -162,6 +168,27 @@ body {
     cursor: pointer;
     font-weight: bold;
     height: 20px;
+}
+
+.close-msg-btn {
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    font-family: 'dieFont', Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    font-size: 1.25em;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    padding: 0;
+    margin: 5px 10px;
+}
+
+.close-msg-btn:hover,
+.close-msg-btn:active {
+    border: 1px dashed black;
+    background-color: black;
+    color: white;
 }
 
 #setting-icon-container {
@@ -221,7 +248,6 @@ body {
     font-size: 1.5em;
     margin: 0;
 }
-
 
 button {
     margin: 0;
@@ -294,9 +320,12 @@ button {
 }
 
 .message-text {
-    color: white;
+    color: black;
+    font-weight: bold;
     padding: 0;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    font-size: 1.25em;
+    text-align: center;
 }
 
 
