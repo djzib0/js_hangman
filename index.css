@@ -21,7 +21,6 @@ body {
     margin: 0 auto;
     display: flex;
     width: 610px;
-    /* height: 100px; */
     justify-content: center;
     background-image: url('images/gridpaper.jpg');
     background-size: 70%;
@@ -35,8 +34,6 @@ body {
 .game-container {
     align-items: center;
     display: flex;
-    /* padding: 20px 0; */
-    /* display: none; */
     height: 400px;
 }
 
@@ -101,7 +98,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* padding: 5px; */
     margin: 0;
 }
 
@@ -110,14 +106,12 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     position: fixed;
-    width: 300px;
-    height: 100px;
     left: 0;
     right: 0;
     top: 120px;
     bottom: 0;
     width: 300px;
-    height: 300px;
+    height: 80px;
     color: white;
     padding: 5px;
 }
@@ -170,7 +164,8 @@ body {
     height: 20px;
 }
 
-.close-msg-btn {
+.close-msg-btn,
+.confirm-btn {
     border: 1px solid black;
     background-color: white;
     color: black;
@@ -184,9 +179,19 @@ body {
     margin: 5px 10px;
 }
 
+.confirm-btn {
+    height: 35px;
+    padding: 5px 10px;
+    margin: 5px 5px;
+    width: 120px;
+    vertical-align: middle;
+}
+
 .close-msg-btn:hover,
-.close-msg-btn:active {
-    border: 1px dashed black;
+.close-msg-btn:active,
+.confirm-btn:hover,
+.confirm-btn:active {
+    border: 1px solid black;
     background-color: black;
     color: white;
 }
@@ -228,14 +233,30 @@ body {
     color: red;
 }
 
+input {
+    display: inline-block;
+    font-family: 'panic';
+    font-size: 1.25em;
+    background-color: white;
+    color: black;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    height: 25px;
+    width: 100px;
+    padding: 4px 5px;
+    margin: 5px 5px;
+    border: 1px solid black;
+    vertical-align: middle;
+}
+
+
 .word-par {
     margin-right: 3px;
     text-align: center;
-    /* width: 20px; */
     font-size: 50px;
     margin: 0px 10px;
     display: inline-block;
-    /* letter-spacing: 10px; */
 }
 
 .medium-par {
@@ -272,6 +293,7 @@ button {
 .start-game-btn:active {
     opacity: 80%;
 }
+
 
 .btn-off,
 .btn-on {

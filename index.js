@@ -42,8 +42,6 @@ const offBtn = document.getElementById("btn-off")
 const onBtn = document.getElementById("btn-on")
 
 
-
-// gameContainer.style.height = 0
 startGameBtn.addEventListener("click", function() {
     startGame()
 })
@@ -201,7 +199,6 @@ function addForm() {
             letter = letter.toUpperCase()
             choices.push(letter)
             usedLetters.push(letter)
-            // renderGame()
         } else if (!isInChosenWord(letter) && !usedLetters.includes(letter)) {
             tries -= 1
             letter = letter.toUpperCase()
@@ -209,10 +206,8 @@ function addForm() {
             if (!usedLetters.includes(letter)) {
                 usedLetters.push(letter)
             }
-            // renderGame()
         } else {
             renderMessage(letter)
-            // renderGame()
         }
     } else {
         renderMessageNotALetter(letter)
@@ -255,33 +250,33 @@ function renderMessage(letter) {
     messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `Letter "${letter.toUpperCase()}" was already chosen. Please try another letter.`
-    // setTimeout(() => {
-    //     messageContainer.style.display = 'none'
-    //     messageWindowIsActive = false
-    //     renderGame()
-    // }, 3000);
+    setTimeout(() => {
+        messageContainer.style.display = 'none'
+        messageWindowIsActive = false
+        renderGame()
+    }, 3000);
 }
 
 function renderMessageNotALetter(letter) {
     messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `"${letter.toUpperCase()}" is not a letter.`
-    // setTimeout(() => {
-    //     messageContainer.style.display = 'none'
-    //     messageWindowIsActive = false
-    //     renderGame()
-    // }, 3000);
+    setTimeout(() => {
+        messageContainer.style.display = 'none'
+        messageWindowIsActive = false
+        renderGame()
+    }, 3000);
 }
 
 function renderMessageToLongString(letter) {
     messageWindowIsActive = true
     messageContainer.style.display = 'flex'
     messageText.innerHTML = `You can only pick one letter`
-    // setTimeout(() => {
-    //     messageContainer.style.display = 'none'
-    //     messageWindowIsActive = false
-    //     renderGame()
-    // }, 3000);
+    setTimeout(() => {
+        messageContainer.style.display = 'none'
+        messageWindowIsActive = false
+        renderGame()
+    }, 3000);
 }
 
 function showEndGame() {
